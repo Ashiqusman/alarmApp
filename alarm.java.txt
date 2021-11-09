@@ -1,0 +1,55 @@
+package com.alarm.smart;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.widget.TextClock;
+import android.widget.TimePicker;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class MainActivity extends AppCompatActivity {
+
+    TimePicker alarmTime;
+    TextClock currentTime;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        alarmTime=findViewById(R.id.timePicker);
+        currentTime=findViewById(R.id.textClock);
+
+        Timer t= new Timer();
+        t.scheduleAtFixedRate(new TimerTask() {   //for scheduling at a fixed time
+            @Override           //  forms automatcly when defining TimerTask
+            public void run() {
+
+                if(currentTime.getText().toString().equals(AlarmTime())){
+
+                }
+
+            }
+        },0,1000);  //delay 0- for starting immediatly --  period in milli second(100)for checking at each sec.
+
+    }
+
+    public String AlarmTime(){
+        Integer alarmHour = alarmTime.getCurrentHour();
+        Integer alarmMinute = alarmTime.getCurrentMinute();  // to get the hours and minutes seperately
+
+        String stringAlarmTime;
+
+        if(alarmHour>12){
+            alarmHour = alarmHour - 12;
+            stringAlarmTime = alarmHour.toString().concat(":").concat(alarmMinute.toString()).concat(" PM"); //concat each elemnts in time
+        } else {
+            stringAlarmTime = alarmHour.toString().concat(":").concat(alarmMinute.toString()).concat(" AM");
+        }
+        return stringAlarmTime;
+
+
+    }
+}
